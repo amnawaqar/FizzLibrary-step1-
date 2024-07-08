@@ -26,7 +26,19 @@
         <ul>
             @foreach (var item in fizzBuzzResult)
             {
-                <li>@item</li>
+
+                @if (item == "fizzbuzz")
+                {
+                    <li>
+                        <span style="color: blue;">fizz</span>
+                        <span style="color: green;">buzz</span>
+                    </li>
+                }
+                else
+                {
+                    <li style="@(item == "fizz" ? "color: blue;" : (item == "buzz" ? "color: green;" : ""))">@item</li>
+                }
+                
             }
         </ul>
     </div>
@@ -34,8 +46,8 @@
 
 @code {
     private InputModel inputModel = new InputModel();
-    private string validationMessage=string.Empty;
-    private List<string> fizzBuzzResult=new();
+    private string validationMessage = string.Empty;
+    private List<string> fizzBuzzResult = new();
 
     private async Task HandleValidSubmit()
     {
@@ -55,9 +67,8 @@
 
     public class InputModel
     {
-        
         [Required(ErrorMessage = "The field is required.")]
-        [Range(1, 1000, ErrorMessage = "Please enter number between 1 and 1000")]
+        [Range(1, 1000, ErrorMessage = "Please enter a number between 1 and 1000.")]
         public int Number { get; set; }
     }
 }
