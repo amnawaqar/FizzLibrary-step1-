@@ -9,22 +9,21 @@ namespace FizzLibrary.Shared.Service
 {
     public class FizzBuzzService : IFizzBuzz
     {
-        public string NumberIsDivisibleBy3(int number)
+        public List<string> GenerateFizzBuzz(int number)
         {
-            return number % 3 == 0 ? "fizz" : "";
-        }
-        public string NumberIsDivisibleBy3And5(int number)
-        {
-            return number % 3 == 0 && number %5 == 0 ? "fizzbuzz" : "";
-        }
-        public string NumberIsDivisibleBy5(int number)
-        {
-            return number % 5 == 0 ? "buzz" : "";
-        }
-        public List<int> ReturnVerticalList(int number)
-        {
-            List<int> ListOfNumbers = Enumerable.Range(1, number).ToList();
-            return ListOfNumbers;
+            var fizzBuzz = new List<string>();
+            for (int i = 1; i <= 1000; i++)
+            {
+                if (i % 3 == 0 && i % 5 == 0)
+                    fizzBuzz.Add("fizzbuzz");
+                else if (i % 3 == 0)
+                    fizzBuzz.Add("fizz");
+                else if (i % 5 == 0)
+                    fizzBuzz.Add("buzz");
+                else
+                    fizzBuzz.Add(i.ToString());
+            }
+            return fizzBuzz;
         }
     }
 }

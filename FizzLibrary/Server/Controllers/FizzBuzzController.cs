@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FizzLibrary.Shared.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -6,38 +7,18 @@ namespace FizzLibrary.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FizzBuzzController : ControllerBase
+    public class FizzBuzzController(IFizzBuzz fizzBuzz) : ControllerBase
     {
         
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{number}")]
+        public IActionResult GenerateFizzBuzz(int number)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<FizzBuzzController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<FizzBuzzController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<FizzBuzzController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<FizzBuzzController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (number <1 || number>1000)
+            {
+                return BadRequest("Number must be between 1 and 1000.");
+            }
+            var result = fizzBuzz.GenerateFizzBuzz(number);
+            return Ok(result);
         }
     }
 }

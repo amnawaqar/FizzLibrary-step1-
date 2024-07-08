@@ -3,54 +3,61 @@
 @inject HttpClient Http
 @using System.ComponentModel.DataAnnotations
 
-<h3>Enter a Positive Integer</h3>
+
+<h3>FizzBuzz Generator</h3>
 
 <EditForm Model="inputModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="mb-3">
-        <label for="positiveIntInput" class="form-label">Positive Integer</label>
-        <InputText id="positiveIntInput" @bind-Value="inputModel.PositiveInteger" class="form-control" />
+        <label for="numberInput" class="form-label">Enter a positive integer</label>
+        <InputNumber id="numberInput" @bind-Value="inputModel.Number" class="form-control" />
         <span class="text-danger">@validationMessage</span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Generate</button>
 </EditForm>
 
-@if (!string.IsNullOrEmpty(successMessage))
+@if (fizzBuzzResult != null)
 {
-    <div class="alert alert-success mt-3">@successMessage</div>
+    <div class="mt-3">
+        <h4>Result:</h4>
+        <ul>
+            @foreach (var item in fizzBuzzResult)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    </div>
 }
 
 @code {
     private InputModel inputModel = new InputModel();
     private string validationMessage=string.Empty;
-    private string successMessage=string.Empty;
+    private List<string> fizzBuzzResult=new();
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
-        successMessage = $"You entered a valid positive integer: {inputModel.PositiveInteger}";
-        validationMessage = string.Empty;
-    }
+        var response = await Http.GetAsync($"api/fizzbuzz/{inputModel.Number}");
 
-    public class InputModel
-    {
-        [Required(ErrorMessage = "The field is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a positive integer.")]
-        public string PositiveInteger { get; set; } = string.Empty;
-    }
-
-    private void OnInput(ChangeEventArgs e)
-    {
-        if (int.TryParse(e.Value.ToString(), out int result) && result >= 0)
+        if (response.IsSuccessStatusCode)
         {
-            inputModel.PositiveInteger = result.ToString();
+            fizzBuzzResult = await response.Content.ReadFromJsonAsync<List<string>>();
             validationMessage = string.Empty;
         }
         else
         {
-            validationMessage = "Please enter a positive integer.";
+            validationMessage = await response.Content.ReadAsStringAsync();
+            fizzBuzzResult = null;
         }
+    }
+
+    public class InputModel
+    {
+        
+        [Required(ErrorMessage = "The field is required.")]
+        [Range(1, 1000, ErrorMessage = "Please enter number between 1 and 1000")]
+        public int Number { get; set; }
     }
 }
