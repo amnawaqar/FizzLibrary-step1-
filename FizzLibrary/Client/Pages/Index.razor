@@ -27,7 +27,7 @@
             @foreach (var item in fizzBuzzResult)
             {
 
-                @if (item == "fizzbuzz")
+                @if (item == "wizzwuzz")
                 {
                     <li>
                         <span style="color: blue;">fizz</span>
@@ -36,7 +36,7 @@
                 }
                 else
                 {
-                    <li style="@(item == "fizz" ? "color: blue;" : (item == "buzz" ? "color: green;" : ""))">@item</li>
+                    <li style="@(item == "wizz" ? "color: blue;" : (item == "wuzz" ? "color: green;" : ""))">@item</li>
                 }
                 
             }
