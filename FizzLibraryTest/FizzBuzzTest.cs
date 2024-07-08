@@ -45,6 +45,18 @@ namespace FizzLibraryTest
             // Assert
             result.Should().BeEmpty();
         }
+        [Fact]
+        public void GenerateFizzBuzz_WithNumberGreaterThan1000_ShouldReturnEmpty()
+        {
+            // Arrange
+            var fizzBuzzService = new FizzBuzzService();
+
+            // Act
+            var result = fizzBuzzService.GenerateFizzBuzz(2001);
+
+            // Assert
+            result.Should().BeEmpty();
+        }
 
     }
 }

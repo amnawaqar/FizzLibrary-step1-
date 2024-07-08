@@ -35,6 +35,8 @@ namespace FizzLibraryTest
 
         [Theory]
         [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(1001)]
         public void GenerateFizzBuzz_InvalidNumber_ShouldReturnBadRequest(int number)
         {
             // Act
@@ -43,8 +45,7 @@ namespace FizzLibraryTest
             // Assert
             var badRequestResult = result as BadRequestObjectResult;
             badRequestResult.Should().NotBeNull();
-
-            badRequestResult.Value.Should().Be("Number must be should between 1 and 1000.");
+            badRequestResult.Value.Should().Be("Number must be between 1 and 1000.");
         }
     }
 }
