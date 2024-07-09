@@ -3,7 +3,7 @@ using FizzLibrary.Shared.Service;
 using FluentAssertions;
 using Moq;
 
-namespace FizzLibraryTest
+namespace FizzLibraryTest.Service
 {
     public class FizzBuzzStrategyTests
     {

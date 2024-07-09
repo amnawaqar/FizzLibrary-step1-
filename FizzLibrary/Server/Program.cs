@@ -12,6 +12,7 @@ builder.Services.AddSingleton<IFizzBuzz, FizzBuzzService>();
 builder.Services.AddSingleton<IFizzBuzz, FizzService>();
 builder.Services.AddSingleton <IFizzBuzz, BuzzService >();
 builder.Services.AddSingleton<IFizzBuzz, NumberService>();
+builder.Services.AddSingleton<IUserValue, UserValueService>();
 builder.Services.AddSingleton<FizzBuzzStrategy>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["ApiBaseAddress"]) });

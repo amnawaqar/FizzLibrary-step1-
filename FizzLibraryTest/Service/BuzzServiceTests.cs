@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FizzLibraryTest
+namespace FizzLibraryTest.Service
 {
     public class BuzzServiceTests
     {

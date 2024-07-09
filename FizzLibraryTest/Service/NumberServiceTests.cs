@@ -1,7 +1,7 @@
 ﻿using FizzLibrary.Shared.Service;
 using FluentAssertions;
 
-namespace FizzLibraryTest
+namespace FizzLibraryTest.Service
 {
     public class NumberServiceTests
     {

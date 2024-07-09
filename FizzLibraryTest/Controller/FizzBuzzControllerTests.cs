@@ -5,7 +5,7 @@ using FizzLibrary.Shared.Interface;
 using FluentAssertions;
 using FizzLibrary.Shared.Service;
 
-namespace FizzLibraryTest
+namespace FizzLibraryTest.Controller
 {
     public class FizzBuzzControllerTests
     {
