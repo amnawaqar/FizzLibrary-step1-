@@ -3,49 +3,44 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using FizzLibrary.Shared.Interface;
 using FluentAssertions;
+using FizzLibrary.Shared.Service;
 
 namespace FizzLibraryTest
 {
     public class FizzBuzzControllerTests
     {
-        private readonly Mock<IFizzBuzz> _mockFizzBuzzService;
         private readonly FizzBuzzController _controller;
+        private readonly FizzBuzzStrategy _fizzBuzzStrategy;
 
         public FizzBuzzControllerTests()
         {
-            _mockFizzBuzzService = new Mock<IFizzBuzz>();
-            _controller = new FizzBuzzController(_mockFizzBuzzService.Object);
+            _fizzBuzzStrategy = new FizzBuzzStrategy();
+            _controller = new FizzBuzzController(_fizzBuzzStrategy);
         }
 
         [Theory]
         [InlineData(9, new[] { "1", "2", "fizz", "4", "buzz", "fizz", "7", "8", "fizz" })]
-        public void GenerateFizzBuzz_ValidNumber_ShouldReturnOkResult(int number, string[] expected)
+        public void GenerateFizzBuzz_ShouldReturnOk(int number, string[] expected)
         {
-            // Arrange
-            _mockFizzBuzzService.Setup(service => service.GenerateFizzBuzz(number)).Returns(new List<string>(expected));
-
             // Act
             var result = _controller.GenerateFizzBuzz(number);
 
             // Assert
-            var okResult = result as OkObjectResult;
-            okResult.Should().NotBeNull();
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             okResult.Value.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
-        [InlineData(-1)]
         [InlineData(0)]
-        [InlineData(1001)]
-        public void GenerateFizzBuzz_InvalidNumber_ShouldReturnBadRequest(int number)
+        [InlineData(-5)]
+        public void GenerateFizzBuzz_ShouldReturnBadRequest_WhenNumberIsLessThanOne(int number)
         {
             // Act
             var result = _controller.GenerateFizzBuzz(number);
 
             // Assert
-            var badRequestResult = result as BadRequestObjectResult;
-            badRequestResult.Should().NotBeNull();
-            badRequestResult.Value.Should().Be("Number must be between 1 and 1000.");
+            var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
+            badRequestResult.Value.Should().Be("Number must be positive number.");
         }
     }
 }

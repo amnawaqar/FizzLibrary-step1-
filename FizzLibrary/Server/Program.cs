@@ -8,7 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddScoped <IFizzBuzz,FizzBuzzService>();
+builder.Services.AddSingleton<IFizzBuzz, FizzBuzzService>();
+builder.Services.AddSingleton<IFizzBuzz, FizzService>();
+builder.Services.AddSingleton <IFizzBuzz, BuzzService >();
+builder.Services.AddSingleton<IFizzBuzz, NumberService>();
+builder.Services.AddSingleton<FizzBuzzStrategy>();
+
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["ApiBaseAddress"]) });
 var app = builder.Build();
 // Configure the HTTP request pipeline.

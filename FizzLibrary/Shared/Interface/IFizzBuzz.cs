@@ -2,7 +2,7 @@
 {
     public interface IFizzBuzz
     {
-        public List<string> GenerateFizzBuzz(int number);
+       public string GenerateFizzBuzz(int number);
 
     }
 }

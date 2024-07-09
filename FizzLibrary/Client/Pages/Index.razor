@@ -26,19 +26,7 @@
         <ul>
             @foreach (var item in fizzBuzzResult)
             {
-
-                @if (item == "wizzwuzz")
-                {
-                    <li>
-                        <span style="color: blue;">fizz</span>
-                        <span style="color: green;">buzz</span>
-                    </li>
-                }
-                else
-                {
-                    <li style="@(item == "wizz" ? "color: blue;" : (item == "wuzz" ? "color: green;" : ""))">@item</li>
-                }
-                
+                    <li>@item</li>   
             }
         </ul>
     </div>
@@ -68,7 +56,7 @@
     public class InputModel
     {
         [Required(ErrorMessage = "The field is required.")]
-        [Range(1, 1000, ErrorMessage = "Please enter a number between 1 and 1000.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a number positive number")]
         public int Number { get; set; }
     }
 }
