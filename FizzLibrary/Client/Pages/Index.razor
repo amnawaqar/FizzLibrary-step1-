@@ -26,16 +26,23 @@
         <ul>
             @foreach (var item in fizzBuzzResult)
             {
-                @if (item == "fizzbuzz")
+                @if (item == "wizzwuzz")
                 {
                     <li>
-                        <span style="color: blue;">fizz</span>
-                        <span style="color: green;">buzz</span>
+                        <span style="color: blue;">wizz</span>
+                        <span style="color: green;">wuzz</span>
                     </li>
                 }
+                else if (item == "fizzbuzz")
+                    {
+                        <li>
+                            <span style="color: blue;">fizz</span>
+                            <span style="color: green;">buzz</span>
+                        </li>
+                    }
                 else
                 {
-                    <li style="@(item == "fizz" ? "color: blue;" : (item == "buzz" ? "color: green;" : ""))">@item</li>
+                    <li style="@(item == "wizz"  || item== "fizz"? "color: blue;" : (item == "wuzz" || item=="buzz" ? "color: green;" : ""))">@item</li>
                 }
             }
         </ul>
@@ -59,7 +66,7 @@
         else
         {
             validationMessage = await response.Content.ReadAsStringAsync();
-            fizzBuzzResult = null;
+            fizzBuzzResult = new();
         }
     }
 

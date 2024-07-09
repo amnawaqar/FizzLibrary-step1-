@@ -1,43 +1,45 @@
 ﻿using FizzLibrary.Shared.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace FizzLibrary.Shared.Service
 {
-    public class FizzBuzzStrategy
-    {
-        private readonly List<IFizzBuzz> _strategies;
-        public FizzBuzzStrategy()
+        public class FizzBuzzStrategy
         {
-            _strategies = new List<IFizzBuzz>
-        {
-            new FizzBuzzService(),
-            new FizzService(),
-            new BuzzService(),
-            new NumberService()
-        };
-        }
-        public List<string> GenerateFizzBuzz(int number)
-        {
-            var fizzBuzzList = new List<string>();
+            private readonly List<IFizzBuzz> _strategies;
+            private readonly Func<DateTime> _dateProvider;
 
-            for (int i = 1; i <= number; i++)
+            public FizzBuzzStrategy()
             {
-                foreach (var strategy in _strategies)
-                {
-                    var result = strategy.GenerateFizzBuzz(i);
-                    if (result != "")
-                    {
-                        fizzBuzzList.Add(result);
-                        break;
-                    }
-                }
+                _strategies = new List<IFizzBuzz>
+            {
+                new FizzBuzzService(),
+                new FizzService(),
+                new BuzzService(),
+                new NumberService()
+            };
             }
 
-            return fizzBuzzList;
-        }
+            public List<string> GenerateFizzBuzz(int number)
+        {  
+            var fizzBuzzList = new List<string>();
+            bool isWednesday = DateTime.Now.DayOfWeek == DayOfWeek.Wednesday;
+
+                for (int i = 1; i <= number; i++)
+                {
+                    foreach (var strategy in _strategies)
+                    {
+                        var result = strategy.GenerateFizzBuzz(i);
+                        if (result != "")
+                        {
+                            if (isWednesday)
+                            {
+                                result = result.Replace("fizz", "wizz").Replace("buzz", "wuzz");
+                            }
+                            fizzBuzzList.Add(result);
+                            break;
+                        }
+                    }
+                }
+                return fizzBuzzList;
+            }
     }
-}
+    }
