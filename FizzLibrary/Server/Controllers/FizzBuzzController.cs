@@ -11,12 +11,13 @@ namespace FizzLibrary.Server.Controllers
         [HttpGet("{number}")]
         public IActionResult GenerateFizzBuzz(int number)
         {
-            if (number <1)
+            if (number >=1 && number<=1000)
             {
-                return BadRequest("Number must be positive number.");
+                var result = _fizzBuzzStrategy.GenerateFizzBuzz(number);
+                return Ok(result);
+               
             }
-            var result = _fizzBuzzStrategy.GenerateFizzBuzz(number);
-            return Ok(result);
+            return BadRequest("Number must be between 1 and 1000.");
         }
     }
 }

@@ -40,7 +40,18 @@ namespace FizzLibraryTest
 
             // Assert
             var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Number must be positive number.");
+            badRequestResult.Value.Should().Be("Number must be between 1 and 1000.");
+        }
+        [Theory]
+        [InlineData(2000)]
+        public void GenerateFizzBuzz_ShouldReturnBadRequest_WhenNumberIsGreaterThan1000(int number)
+        {
+            // Act
+            var result = _controller.GenerateFizzBuzz(number);
+
+            // Assert
+            var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
+            badRequestResult.Value.Should().Be("Number must be between 1 and 1000.");
         }
     }
 }
