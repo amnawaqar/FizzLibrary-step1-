@@ -26,7 +26,17 @@
         <ul>
             @foreach (var item in fizzBuzzResult)
             {
-                    <li>@item</li>   
+                @if (item == "fizzbuzz")
+                {
+                    <li>
+                        <span style="color: blue;">fizz</span>
+                        <span style="color: green;">buzz</span>
+                    </li>
+                }
+                else
+                {
+                    <li style="@(item == "fizz" ? "color: blue;" : (item == "buzz" ? "color: green;" : ""))">@item</li>
+                }
             }
         </ul>
     </div>
